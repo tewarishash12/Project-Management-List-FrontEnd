@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
 import DarkModeToggle from './components/DarkMode';
+import Footer from './components/Footer';
 // import AuthProvider from './context/AuthContext'; // Assuming you are using the Context API for authentication
 // import ProjectProvider from './context/ProjectContext'; // Assuming you are using the Context API for projects
 
@@ -45,6 +46,7 @@ const App = () => {
             </Router>
             {/* </ProjectProvider> */}
             {/* </AuthProvider> */}
+            <Footer/>
         </>
     );
 };

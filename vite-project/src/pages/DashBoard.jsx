@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import TaskCard from '../components/TaskCard';
 
+
 const Dashboard = ({ darkMode }) => {
     const tasks = [
         { id: 1, title: 'Design Homepage', description: 'Create the homepage design' },
