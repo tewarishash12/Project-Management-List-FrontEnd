@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
+import DashBoard from './pages/DashBoard';
 import ProjectView from './pages/ProjectView';
 import TaskDetails from './pages/TaskDetails';
 import Login from './pages/Login';
@@ -28,15 +28,15 @@ const App = () => {
     return (
         <>
             <Router>
-                <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} sm:p-4 md:p-6 lg:p-8`}>
+                <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} `}>
                     <Routes>
                         {/* Public Routes */}
                         <Route path="/auth/login" element={<Login darkMode={darkMode} />} />
                         <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
                         
                         {/* Protected Routes */}
-                        <Route path="/" element={<Dashboard darkMode={darkMode} />} />
-                        <Route path="/dashboard" element={<Dashboard darkMode={darkMode} />} />
+                        <Route path="/" element={<DashBoard darkMode={darkMode} />} />
+                        {/* <Route path="/dashboard" element={<Dashboard darkMode={darkMode} />} /> */}
                         <Route path="/projects/:id" element={<ProjectView darkMode={darkMode} />} />
                         <Route path="/tasks/:id" element={<TaskDetails darkMode={darkMode} />} />
                         
