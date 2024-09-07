@@ -11,8 +11,7 @@ const ProjectView = ({ darkMode }) => {
     };
 
     return (
-        <div className={`flex ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} 
-                        sm:p-4 md:p-6 lg:p-8`}>
+        <div className={`flex ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} sm:p-4 md:p-6 lg:p-8`}>
             <Sidebar darkMode={darkMode} />
             <main className="flex-1 p-6 sm:p-4 md:p-6 lg:p-8">
                 <Header darkMode={darkMode} />
