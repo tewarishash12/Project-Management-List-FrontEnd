@@ -9,7 +9,7 @@ const NotFound = ({ darkMode }) => {
                 <p className="text-2xl md:text-3xl mb-4">Page Not Found</p>
                 <Link
                     to="/"
-                    className={`p-2 rounded-md ${darkMode ? 'bg-indigo-500 text-white' : 'bg-indigo-600 text-white'} hover:bg-indigo-700 transition duration-300`}
+                    className={`p-2 rounded-md ${darkMode ? 'bg-indigo-400 text-white' : 'bg-indigo-700 text-white'} hover:bg-indigo-600 transition duration-300`}
                 >
                     Go to Homepage
                 </Link>

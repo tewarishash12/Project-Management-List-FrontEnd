@@ -13,9 +13,9 @@ const Dashboard = ({ darkMode }) => {
 
     return (
         <div className={`flex ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'} min-h-screen transition-colors duration-300`}>
-            <Sidebar />
+            <Sidebar darkMode={darkMode}/>
             <main className="flex-1 p-6">
-                <Header />
+                <Header darkMode={darkMode}/>
                 <h2 className="text-3xl font-bold mb-4">Dashboard</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {tasks.map(task => (

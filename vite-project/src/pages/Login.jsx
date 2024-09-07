@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-// import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/UseAuth'; // Adjust path if needed
 
 const Login = ({ darkMode }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const { login } = useAuth();
+    const { login } = useAuth(); // Access login function from AuthContext
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // login(email, password);
+        try {
+            await login(email, password);
+            // Redirect or show a success message after login
+        } catch (error) {
+            console.error('Login failed:', error);
+            // Handle error (e.g., show error message)
+        }
     };
 
     return (
         <div className={`flex justify-center items-center h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} transition-colors duration-300`}>
-            <form 
-                onSubmit={handleSubmit} 
-                className={`${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} p-6 rounded-md shadow-md w-full max-w-md transition-colors duration-300`}
-            >
+            <form onSubmit={handleSubmit} className={`${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} p-6 rounded-md shadow-md w-full max-w-md transition-colors duration-300`}>
                 <h2 className="text-2xl font-bold mb-4">Login</h2>
                 <div className="mb-4">
                     <label className="block mb-2">Email</label>
