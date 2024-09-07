@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const Signup = ({ darkMode }) => {
     const [email, setEmail] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     // const { signup } = useAuth();
@@ -27,16 +28,25 @@ const Signup = ({ darkMode }) => {
             >
                 <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Signup</h2>
                 <div className="mb-4">
-                    <label className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Email</label>
+                    <label htmlFor='username' className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Username</label>
+                    <input
+                        type="name"
+                        value={userName}
+                        name="username"
+                        onChange={(e) => setUserName(e.target.value)}
+                        className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
+                    />
+                    <label htmlFor='email' className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Email</label>
                     <input
                         type="email"
                         value={email}
+                        name="email"
                         onChange={(e) => setEmail(e.target.value)}
                         className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                     />
                 </div>
                 <div className="mb-4">
-                    <label className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Password</label>
+                    <label htmlFor='password' className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Password</label>
                     <input
                         type="password"
                         value={password}
@@ -45,10 +55,11 @@ const Signup = ({ darkMode }) => {
                     />
                 </div>
                 <div className="mb-6">
-                    <label className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Confirm Password</label>
+                    <label htmlFor='confirm' className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Confirm Password</label>
                     <input
                         type="password"
                         value={confirmPassword}
+                        name="confirm"
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                     />
