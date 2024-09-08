@@ -26,6 +26,17 @@ const Dashboard = ({ darkMode }) => {
         day: 'numeric',
     });
 
+    const currentHour = new Date().getHours();
+    let greeting;
+
+    if (currentHour < 12) {
+        greeting = 'Good morning';
+    } else if (currentHour < 18) {
+        greeting = 'Good afternoon';
+    } else {
+        greeting = 'Good evening';
+    }
+
     return (
         <div className={`flex min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'}`}>
             {/* Sidebar */}
@@ -38,10 +49,10 @@ const Dashboard = ({ darkMode }) => {
                 <Header toggleSidebar={toggleSidebar} darkMode={darkMode} />
 
                 {/* Greeting Section */}
-                <div className="px-6 py-4">
-                    <p className="text-lg">{currentDate}</p>
-                    <h1 className="text-2xl font-bold mb-2">Good afternoon, shashankjohri07</h1>
-                    <div className="flex items-center space-x-4">
+                <div className="px-6 py-4 flex justify-center flex-col">
+                    <p className="text-lg text-center">{currentDate}</p>
+                    <h1 className="text-2xl text-center font-bold mb-2">{`${greeting}, shashankjohri07`}</h1>
+                    <div className="flex justify-center items-center space-x-4">
                         <div>My week</div>
                         <div>0 tasks completed</div>
                         <div>0 collaborators</div>
@@ -52,20 +63,21 @@ const Dashboard = ({ darkMode }) => {
                 <main className="p-6 transition-all duration-300">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* My Tasks */}
-                        <div className="rounded-lg shadow-lg p-4 bg-gray-800">
+                        <div className="rounded-lg shadow-lg p-4 bg-gray-800 h-70">
                             <h2 className="text-xl text-white font-bold mb-4 col-span-full">My tasks</h2>
                             {tasks.map(task => (
                                 <TaskCard
                                     key={task.id}
                                     task={task}
-                                    className={`p-2 rounded-lg transition-all duration-300 transform ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} hover:scale-105 hover:shadow-xl`}
+                                    darkMode={darkMode}  // Pass darkMode prop to TaskCard
+                                    className={`p-2 rounded-lg transition-all duration-300 transform ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} hover:scale-105 hover:shadow-xl mb-4`}
                                     style={{ height: '150px', width: '100%' }}
                                 />
                             ))}
                         </div>
 
                         {/* Projects */}
-                        <div className="rounded-lg shadow-lg p-4 bg-gray-800">
+                        <div className="rounded-lg shadow-lg p-4 bg-gray-800 h-70">
                             <h2 className="text-xl text-white font-bold mb-4">Projects</h2>
                             <div>
                                 {projects.map(project => (

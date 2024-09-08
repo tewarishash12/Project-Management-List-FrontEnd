@@ -31,8 +31,8 @@ const App = () => {
                 <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} `}>
                     <Routes>
                         {/* Public Routes */}
-                        <Route path="/login" element={<Login darkMode={darkMode} />} />
-                        <Route path="/signup" element={<Signup darkMode={darkMode} />} />
+                        <Route path="/auth/login" element={<Login darkMode={darkMode} />} />
+                        <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
 
                         {/* Protected Routes */}
                         <Route path="/" element={<DashBoard darkMode={darkMode} />} />
