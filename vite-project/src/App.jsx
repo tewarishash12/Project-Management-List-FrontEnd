@@ -36,7 +36,6 @@ const App = () => {
 
                         {/* Protected Routes */}
                         <Route path="/" element={<DashBoard darkMode={darkMode} />} />
-                        {/* <Route path="/dashboard" element={<Dashboard darkMode={darkMode} />} /> */}
                         <Route path="/projects/:id" element={<ProjectView darkMode={darkMode} />} />
                         <Route path="/tasks/:id" element={<TaskDetails darkMode={darkMode} />} />
 

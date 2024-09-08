@@ -82,10 +82,11 @@ const Login = ({ darkMode }) => {
                     <select
                         id="role"
                         value={role}
+                        name='role'
                         onChange={handleRoleChange}
                         className={`w-full mb-7 p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                     >
-                        <option value="" disabled>Select a role</option>
+                        <option disabled>Select a role</option>
                         <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
                         <option value="teamMember">Team Member</option>
