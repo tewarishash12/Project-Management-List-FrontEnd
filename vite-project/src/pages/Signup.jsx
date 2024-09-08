@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-import { useAuth } from '../hooks/UseAuth'; // Adjust the path if needed
+import { useAuth } from '../context/AuthContext'; // Adjust the path if needed
+import { useNavigate } from 'react-router-dom';
 
 const Signup = ({ darkMode }) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [userName, setUserName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { signup } = useAuth(); // Access signup function from AuthContext
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (password === confirmPassword) {
-            try {
-                await signup(email, password, userName);
-                // Redirect or show a success message after signup
-            } catch (error) {
-                console.error('Signup failed:', error);
-                // Handle error (e.g., show error message)
-            }
-        } else {
-            alert('Passwords do not match');
+        try {
+            await signup(username, email, password);
+            navigate('/');
+            
+        } catch (error) {
+            console.error('Signup failed:', error);
+            navigate('/auth/signup');
         }
     };
 
@@ -35,9 +34,9 @@ const Signup = ({ darkMode }) => {
                     <label htmlFor='username' className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Username</label>
                     <input
                         type="text"
-                        value={userName}
+                        value={username}
                         name="username"
-                        onChange={(e) => setUserName(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value)}
                         className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                     />
                 </div>

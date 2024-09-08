@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth } from '../hooks/UseAuth'; // Adjust path if needed
+import { useAuth } from '../context/AuthContext'; // Adjust path if needed
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ darkMode }) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useAuth(); // Access login function from AuthContext
@@ -10,10 +12,10 @@ const Login = ({ darkMode }) => {
         e.preventDefault();
         try {
             await login(email, password);
-            // Redirect or show a success message after login
+            navigate('/');
         } catch (error) {
             console.error('Login failed:', error);
-            // Handle error (e.g., show error message)
+            navigate('/auth/login')
         }
     };
 
