@@ -12,26 +12,29 @@ const Header = ({ toggleSidebar, darkMode }) => {
                         onClick={toggleSidebar}
                     ></i>
                     <a href="#" className="flex items-center">
-                        <span className="text-blue-600 text-lg font-semibold ml-2">Tasks</span>
+                        <span className="text-blue-600 text-lg font-semibold ml-2"><i class="fa-solid fa-cube pr-4"></i>PeakPlanner</span>
                     </a>
                 </div>
                 
-                {/* Middle Section: Links */}
-                <div className="hidden md:flex items-center space-x-6">
-                    <a href="#" className="hover:text-blue-600">Editor</a>
-                    <a href="#" className="hover:text-blue-600">Challenges</a>
-                    <a href="#" className="hover:text-blue-600">Orgs</a>
-                    <a href="#" className="hover:text-blue-600">More</a>
-                </div>
-
                 {/* Right Section: Search Bar */}
                 <div className="flex items-center space-x-8">
                     <input
                         type="text"
-                        className="border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        className="border border-gray-300 rounded-full py-1 px-8 w-80 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         placeholder="Search..."
                     />
                 </div>
+                
+                {/* Middle Section: Links */}
+                <div className="hidden md:flex items-center space-x-6">
+                <button className="hover:bg-blue-400 bg-blue-600  rounded-full p-1 font-sm pl-4 pr-4">
+                     <a href="/login">Login</a>
+              </button>
+                <button className="hover:bg-blue-400 bg-blue-600 rounded-full p-1 font-sm pl-4 pr-4">
+                    <a href="/signup">Signup</a>
+                      </button>
+                </div>
+
             </div>
         </nav>
     );
