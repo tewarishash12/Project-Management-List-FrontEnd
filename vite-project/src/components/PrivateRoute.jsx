@@ -1,16 +1,11 @@
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/UseAuth'; // Adjust the path as needed
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-const PrivateRoute = ({ element: Element, ...rest }) => {
+const PrivateRoute = ({ element: Component, ...rest }) => {
     const { user } = useAuth();
 
-    return (
-        <Route
-            {...rest}
-            element={user ? <Element /> : <Navigate to="/auth/login" />}
-        />
-    );
+    return user ? <Component {...rest} /> : <Navigate to="/auth/login" />;
 };
 
 export default PrivateRoute;

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { Route, Navigate } from 'react-router-dom';
 
 // Create the AuthContext
 const AuthContext = createContext();
@@ -8,16 +9,23 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const url = "https://backend-7coa.onrender.com";
 
-    const signup = async (username, email, password) => {
+    // Check if user is already logged in on initial render
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            // You might want to verify the token or get the user data from the token here
+            setUser({ token });
+        }
+    }, []);
 
+    const signup = async (username, email, password) => {
         try {
             const res = await fetch(`${url}/auth/signup`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({ username, email, password })
             });
-            if (!res.ok)
-                throw new Error("Failed to Sign Up");
+            if (!res.ok) throw new Error("Failed to Sign Up");
 
             const data = await res.json();
             console.log("Successfully registered user", data);
@@ -36,8 +44,7 @@ export const AuthProvider = ({ children }) => {
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({ email, password })
             });
-            if (!res.ok)
-                throw new Error("Login failed");
+            if (!res.ok) throw new Error("Login failed");
 
             const data = await res.json();
             setUser(data.user);
@@ -63,4 +70,22 @@ export const AuthProvider = ({ children }) => {
 // Custom hook to use the AuthContext
 export const useAuth = () => {
     return useContext(AuthContext);
+};
+
+// PrivateRoute component
+export const PrivateRoute = ({ component: Component, ...rest }) => {
+    const { user } = useAuth();
+
+    return (
+        <Route
+            {...rest}
+            render={(props) =>
+                user ? (
+                    <Component {...props} />
+                ) : (
+                    <Navigate to="/auth/login" />
+                )
+            }
+        />
+    );
 };
