@@ -16,16 +16,15 @@ const Login = ({ darkMode }) => {
         const selectedRole = e.target.value;
         setRole(selectedRole);
 
-        // Update role label based on selected role
         switch (selectedRole) {
             case 'admin':
-                setRoleLabel('Admin');
+                setRoleLabel('admin');
                 break;
             case 'manager':
-                setRoleLabel('Manager');
+                setRoleLabel('manager');
                 break;
             case 'teamMember':
-                setRoleLabel('Team Member');
+                setRoleLabel('teamMember');
                 break;
             default:
                 setRoleLabel('Select a role');
@@ -44,18 +43,23 @@ const Login = ({ darkMode }) => {
             await login(email, password);
             navigate('/');
         } catch (error) {
-            console.error('Login failed:', error);
             setError('Login failed. Please check your credentials and try again.');
             navigate('/auth/login');
         }
     };
 
     return (
-        <div className={`flex justify-center items-center h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} transition-colors duration-300`}>
-            <form onSubmit={handleSubmit} className={`${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} p-6 rounded-md shadow-md w-full max-w-md transition-colors duration-300`}>
+        <div 
+            className={`flex justify-center items-center h-screen bg-no-repeat bg-center bg-cover`} 
+            style={{ backgroundImage: `url('https://img.freepik.com/free-vector/stylish-white-background-with-diagonal-lines_1017-33199.jpg')` }} // Adjust with the actual background URL
+        >
+            <form 
+                onSubmit={handleSubmit} 
+                className={`${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-gray-900'} p-6 rounded-md shadow-md w-full max-w-md transition-colors duration-300`}
+            >
                 <h2 className="text-2xl text-center font-bold mb-4">Login</h2>
                 
-                {error && <p className="text-red-500 mb-4">{error}</p>} {/* Display error message */}
+                {error && <p className="text-red-500 mb-4">{error}</p>}
 
                 <div className="mb-4">
                     <label className="block mb-2">Email</label>
