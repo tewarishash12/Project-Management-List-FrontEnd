@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext'; // Adjust the path if needed
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = ({ darkMode }) => {
     const navigate = useNavigate();
@@ -26,52 +26,53 @@ const Signup = ({ darkMode }) => {
     };
 
     return (
-        <div
-            className={`flex justify-center items-center h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} transition-colors duration-300`}
+        <div 
+            className={`flex justify-center items-center h-screen bg-no-repeat bg-center bg-cover`} 
+            style={{ backgroundImage: `url('https://img.freepik.com/free-vector/stylish-white-background-with-diagonal-lines_1017-33199.jpg')` }} // Adjust with the actual background URL
         >
             <form
                 onSubmit={handleSubmit}
-                className={`p-6 rounded-md shadow-md ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} max-w-md w-full transition-colors duration-300`}
+                className={`p-4 rounded-md shadow-md ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-gray-900'} max-w-sm w-full transition-colors duration-300`}
             >
-                <h2 className={`text-2xl text-center font-bold mb-6 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Signup</h2>
-                <div className="mb-4">
+                <h2 className={`text-2xl text-center font-bold mb-4 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Signup</h2>
+                <div className="mb-3">
                     <label htmlFor="username" className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Username</label>
                     <input
                         type="text"
                         value={username}
                         name="username"
                         onChange={(e) => setUsername(e.target.value)}
-                        className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
+                        className={`w-full p-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-3">
                     <label htmlFor="email" className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Email</label>
                     <input
                         type="email"
                         value={email}
                         name="email"
                         onChange={(e) => setEmail(e.target.value)}
-                        className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
+                        className={`w-full p-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-3">
                     <label htmlFor="password" className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Password</label>
                     <input
                         type="password"
                         value={password}
                         name="password"
                         onChange={(e) => setPassword(e.target.value)}
-                        className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
+                        className={`w-full p-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-3">
                     <label htmlFor="role" className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Role</label>
                     <select
                         id="role"
                         value={role}
                         name="role"
                         onChange={handleRoleChange}
-                        className={`w-full mb-7 p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
+                        className={`w-full p-2 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                     >
                         <option value="" disabled>Select a role</option>
                         <option value="admin">Admin</option>
@@ -85,7 +86,7 @@ const Signup = ({ darkMode }) => {
                 >
                     Signup
                 </button>
-                <Link to="/auth/login" className="block mt-8 text-blue-600 hover:text-blue-700 hover:underline text-center">
+                <Link to="/auth/login" className="block mt-5 text-blue-600 hover:text-blue-700 hover:underline text-center">
                     Already Registered? Login
                 </Link>
             </form>
