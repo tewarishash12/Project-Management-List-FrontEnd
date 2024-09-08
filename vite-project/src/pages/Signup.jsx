@@ -5,14 +5,33 @@ import { useNavigate } from 'react-router-dom';
 const Signup = ({ darkMode }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [role, setRole] = useState(' ')
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { signup } = useAuth(); // Access signup function from AuthContext
-
+ const handleRoleChange = (e) => {
+        const selectedRole = e.target.value;
+        setRole(selectedRole);
+        
+        // Update role Label based on selected role
+        switch (selectedRole) {
+            case 'admin':
+                setRoleLabel('Admin');
+                break;
+            case 'manager':
+                setRoleLabel('Manager');
+                break;
+            case 'teamMember':
+                setRoleLabel('Team Member');
+                break;
+            default:
+                setRoleLabel('Select a role');
+        }
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await signup(username, email, password);
+            await signup(Role,username, email, password);
             navigate('/');
             
         } catch (error) {
@@ -30,6 +49,22 @@ const Signup = ({ darkMode }) => {
                 className={`p-6 rounded-md shadow-md ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} max-w-md w-full transition-colors duration-300`}
             >
                 <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Signup</h2>
+                <div className="mb-4">
+                    <label htmlFor='role' className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Role</label>
+                    <select
+                        id='role'
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        className={`w-full p-3 border rounded-md ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-white border-gray-300 text-gray-900'} focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
+                    >
+                        <option value="" disabled>Select a role</option>
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option> 
+                       
+   
+                        <option value="teamMember">Team Member</option>
+                    </select>
+                </div>
                 <div className="mb-4">
                     <label htmlFor='username' className={`block mb-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Username</label>
                     <input
@@ -66,9 +101,7 @@ const Signup = ({ darkMode }) => {
                 >
                     Signup
                 </button>
-                <a href="/" className="text-center px-32  mt-8 text-blue-600 hover:text-blue-700 hover:underline">
-    Back to Home Page
-</a>    
+                   
             </form>
         </div>
     );
