@@ -13,13 +13,13 @@ function Footer() {
                     >
                         <i className="fa-brands fa-square-instagram text-pink-600 text-2xl hover:text-pink-800"></i>
                     </a>
-                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer " className='transition-transform duration-300 transform hover:scale-110'>
                         <i className="fa-brands fa-square-facebook text-blue-700 text-2xl"></i>
                     </a>
-                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className='transition-transform duration-300 transform hover:scale-110'>
                         <i className="fa-brands fa-youtube text-red-700 text-2xl"></i>
                     </a>
-                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className='transition-transform duration-300 transform hover:scale-110'>
                         <i className="fa-brands fa-linkedin text-blue-700 text-2xl"></i>
                     </a>
                 </div>

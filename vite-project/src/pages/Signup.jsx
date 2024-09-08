@@ -66,6 +66,9 @@ const Signup = ({ darkMode }) => {
                 >
                     Signup
                 </button>
+                <a href="/" className="text-center px-32  mt-8 text-blue-600 hover:text-blue-700 hover:underline">
+    Back to Home Page
+</a>    
             </form>
         </div>
     );

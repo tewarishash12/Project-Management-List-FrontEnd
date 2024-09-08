@@ -44,6 +44,10 @@ const Login = ({ darkMode }) => {
                 <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 transition-colors duration-300">
                     Login
                 </button>
+                <a href="/signup" className="px-20 mt-8 text-blue-600 hover:text-blue-700 hover:underline">
+                    Don't have an account? Sign up
+                </a>
+
             </form>
         </div>
     );
