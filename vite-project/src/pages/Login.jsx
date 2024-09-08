@@ -19,13 +19,13 @@ const Login = ({ darkMode }) => {
         // Update role label based on selected role
         switch (selectedRole) {
             case 'admin':
-                setRoleLabel('Admin');
+                setRoleLabel('admin');
                 break;
             case 'manager':
-                setRoleLabel('Manager');
+                setRoleLabel('manager');
                 break;
             case 'teamMember':
-                setRoleLabel('Team Member');
+                setRoleLabel('teamMember');
                 break;
             default:
                 setRoleLabel('Select a role');
