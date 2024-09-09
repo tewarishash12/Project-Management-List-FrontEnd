@@ -36,7 +36,7 @@ const Sidebar = ({ darkMode }) => {
             {/* Conditionally render the Chat component */}
             {showChat && (
                 <div className="absolute top-0 right-0 h-screen w-1/3 bg-white shadow-lg">
-                    <Chat />
+                    {/* <Chat /> */}
                 </div>
             )}
         </div>
