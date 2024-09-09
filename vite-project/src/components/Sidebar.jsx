@@ -9,7 +9,7 @@ const Sidebar = ({ darkMode }) => {
     };
 
     return (
-        <div className={`h-full ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
+        <div className={`h-screen ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} fixed top-0 left-0 w-64`}>
             <ul className="p-4 pt-10">
                 <li className="py-2 pl-4 hover:bg-gray-200 hover:text-black transition-colors duration-200">
                     <Link to="/dashboard"><i className="fa-solid fa-house pr-4"></i>Home</Link>

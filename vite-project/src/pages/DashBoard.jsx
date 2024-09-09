@@ -46,7 +46,7 @@ const Dashboard = ({ darkMode }) => {
 
     return (
         <div 
-            className={`flex min-h-screen transition-all duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'}`}
+            className={`flex flex-col min-h-screen transition-all duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'}`}
         >
             {/* Sidebar */}
             <Sidebar darkMode={darkMode} isVisible={isSidebarVisible} />
@@ -73,7 +73,7 @@ const Dashboard = ({ darkMode }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* My Tasks */}
                         <div className={`rounded-lg shadow-lg p-4 ${darkMode ? 'bg-gray-800' : 'bg-white'} h-70`}>
-                            <h2 className="text-xl text-white font-bold mb-4 col-span-full">My tasks</h2>
+                            <h2 className="text-xl text-black font-bold mb-4 col-span-full">My tasks</h2>
                             {tasks.map(task => (
                                 <TaskCard
                                     key={task.id}
@@ -105,7 +105,7 @@ const Dashboard = ({ darkMode }) => {
                     </div>
                 </main>
             </div>
-            <Footer />
+            <Footer darkMode={darkMode} />
         </div>
     );
 };
