@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DashBoard from './pages/DashBoard';
 import ProjectView from './pages/ProjectView';
 import TaskDetails from './pages/TaskDetails';
+import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
 import DarkModeToggle from './components/DarkMode';
-import ProfilePage from './pages/Profilepage';
 import { AuthProvider } from './context/AuthContext'; // Assuming you are using the Context API for authentication
 // import PrivateRoute from './components/PrivateRoute'; // Importing the PrivateRoute component
 
@@ -27,12 +27,11 @@ const App = () => {
     }, [darkMode]);
 
     return (
-        <AuthProvider>
-            <Router>
+        <Router>
+            <AuthProvider>
                 <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} `}>
                     <Routes>
                         {/* Public Routes */}
-                        <Route path = "/auth/profile" element = {<ProfilePage/>}/>
                         <Route path="/auth/login" element={<Login darkMode={darkMode} />} />
                         <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
 
@@ -40,9 +39,8 @@ const App = () => {
                         {/* <Route path="/" element={<Route element={DashBoard} darkMode={darkMode} />} />
                         <Route path="/projects/:id" element={<Route element={ProjectView} darkMode={darkMode} />} />
                         <Route path="/tasks/:id" element={<Route element={TaskDetails} darkMode={darkMode} />} /> */}
-                        
+
                         <Route path="/" element={<DashBoard darkMode={darkMode} />} />
-                        
                         <Route path="/projects/:id" element={<ProjectView darkMode={darkMode} />} />
                         <Route path="/tasks/:id" element={<TaskDetails darkMode={darkMode} />} />
 
@@ -53,8 +51,8 @@ const App = () => {
                     </Routes>
                 </main>
                 <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-            </Router>
-        </AuthProvider>
+            </AuthProvider>
+        </Router>
     );
 };
 

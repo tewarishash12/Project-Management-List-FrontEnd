@@ -1,91 +1,101 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-// Create the AuthContext
 const AuthContext = createContext();
 
-// AuthProvider component to wrap your app
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const url = "https://backend-7coa.onrender.com";
+    const url = "http://localhost:3000";
 
-    // Check if user is already logged in on initial render
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            // You might want to verify the token or get the user data from the token here
-            setUser({ token });
-        }
+        // Axios interceptor to attach the token to all requests
+        axios.interceptors.request.use(
+            (config) => {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    config.headers['Authorization'] = `Bearer ${token}`;
+                }
+                return config;
+            },
+            (error) => {
+                return Promise.reject(error);
+            }
+        );
+
+        // Check for existing token in localStorage and fetch user data
+        const checkUserLoggedIn = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setUser(null);
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const response = await axios.get('http://localhost:3000/auth/profile'); // Adjust the URL if needed
+                setUser(response.data);
+            } catch (error) {
+                console.error('Failed to fetch user data:', error);
+                setUser(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkUserLoggedIn();
     }, []);
-
-    const signup = async (username, email, password, role) => {
-        try {
-            const res = await fetch(`${url}/auth/signup`, {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ username, email, password, role })
-            });
-            if (!res.ok) throw new Error("Failed to Sign Up");
-
-            const data = await res.json();
-            console.log("Successfully registered user", data);
-            localStorage.setItem("authToken", data.token);
-            setUser({ email, username });
-            return data;
-        } catch (err) {
-            console.log("Error Message:", err.message);
-        }
-    }
 
     const login = async (email, password, role) => {
         try {
-            const res = await fetch(`${url}/auth/login`, {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ email, password, role })
-            });
-            if (!res.ok) throw new Error("Login failed");
+            const response = await axios.post('http://localhost:3000/auth/login', { email, password, role });
+            const { token, user } = response.data;
 
-            const data = await res.json();
-            setUser(data.user);
-            localStorage.setItem('authToken', data.token);
-            console.log(data.token);
+            // Store the token in localStorage
+            localStorage.setItem('token', token);
+
+            setUser(user);
+            navigate('/');
         } catch (error) {
-            console.log("Error Message:", error.message);
+            console.error('Login failed:', error.response?.data?.message || error.message);
+            setUser(null);
         }
     };
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('authToken');
+    const signup = async (username, email, password, role) => {
+        try {
+            const response = await axios.post('http://localhost:3000/auth/signup', { username, email, password, role });
+            const { token, user } = response.data;
+
+            // Store the token in localStorage
+            localStorage.setItem('token', token);
+
+            setUser(user);
+            navigate('/');
+        } catch (error) {
+            console.error('Signup failed:', error.response?.data?.message || error.message);
+            setUser(null);
+        }
+    };
+
+    const logout = async () => {
+        try {
+            await axios.post('http://localhost:3000/auth/logout');
+            setUser(null);
+            localStorage.removeItem('token'); // Remove the token from localStorage
+            navigate('/auth/login');
+        } catch (error) {
+            console.error('Logout failed:', error.response?.data?.message || error.message);
+        }
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout }}>
-            {children}
+        <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
+            {loading ? <p>Loading...</p> : children}
         </AuthContext.Provider>
     );
 };
 
-// Custom hook to use the AuthContext
 export const useAuth = () => {
     return useContext(AuthContext);
 };
-
-// PrivateRoute component
-// export const PrivateRoute = ({ component: Component, ...rest }) => {
-//     const { user } = useAuth();
-
-//     return (
-//         <Route
-//             {...rest}
-//             render={(props) =>
-//                 user ? (
-//                     <Component {...props} />
-//                 ) : (
-//                     <Navigate to="/auth/login" />
-//                 )
-//             }
-//         />
-//     );
-// };
