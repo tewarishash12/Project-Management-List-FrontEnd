@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Chat from './Chat';  // Import the Chat component
+// import Chat from './Chat';  // Import the Chat component
 
 const Sidebar = ({ darkMode }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
