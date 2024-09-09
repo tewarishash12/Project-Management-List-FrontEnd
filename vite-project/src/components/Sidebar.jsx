@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Chat from './Chat';  // Import the Chat component
+// import Chat from './Chat';  // Import the Chat component
 
 const Sidebar = ({ darkMode }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -36,7 +36,7 @@ const Sidebar = ({ darkMode }) => {
             {/* Conditionally render the Chat component */}
             {showChat && (
                 <div className="absolute top-0 right-0 h-screen w-1/3 bg-white shadow-lg">
-                    <Chat />
+                    {/* <Chat /> */}
                 </div>
             )}
         </div>

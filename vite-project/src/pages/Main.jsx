@@ -1,5 +1,6 @@
 // App.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Main() {
   return (
@@ -8,8 +9,8 @@ function Main() {
       <header className="flex justify-between items-center p-6">
         <div className="text-2xl font-bold text-blue-600"><i className="fa-solid fa-cube pr-4"></i>PeakPlanner</div>
         <div className="space-x-4">
-          <button className="bg-transparent border-2 border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700">Login</button>
-          <button className="bg-transparent border-2 border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700">Sign Up</button>
+          <Link to="/auth/login" className="bg-transparent border-2 border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700">Login</Link>
+          <Link to="/auth/signup" className="bg-transparent border-2 border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700">Sign Up</Link>
         </div>
       </header>
 
