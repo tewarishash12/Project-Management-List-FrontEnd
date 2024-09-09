@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { decodeJwt } from 'jose';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import TaskCard from '../components/TaskCard';
 import Footer from '../components/Footer';
-import Task from '../components/task';
+import Task from '../components/Task';
 
 const Dashboard = ({ darkMode }) => {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -38,21 +39,28 @@ const Dashboard = ({ darkMode }) => {
         greeting = 'Good evening';
     }
 
+    // Decode token to get username
+    const token = localStorage.getItem('token');
+    const decodedToken = token ? decodeJwt(token) : null;
+    const username = decodedToken ? decodedToken.username : "User";
+
     return (
-        <div className={`flex min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'}`}>
+        <div 
+            className={`flex min-h-screen transition-all duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'}`}
+        >
             {/* Sidebar */}
-            <div className={`transition-all duration-300 ${isSidebarVisible ? 'w-64' : 'w-0'} overflow-hidden`}>
-                <Sidebar darkMode={darkMode} />
-            </div>
+            <Sidebar darkMode={darkMode} isVisible={isSidebarVisible} />
 
             {/* Main Content */}
-            <div className="flex-1 transition-all duration-300">
+            <div 
+                className={`flex-1 transition-all duration-300 ${isSidebarVisible ? 'ml-64' : 'ml-16'}`}
+            >
                 <Header toggleSidebar={toggleSidebar} darkMode={darkMode} />
 
                 {/* Greeting Section */}
                 <div className="px-6 py-4 flex justify-center flex-col">
                     <p className="text-lg text-center">{currentDate}</p>
-                    <h1 className="text-2xl text-center font-bold mb-2">{`${greeting}, shashankjohri07`}</h1>
+                    <h1 className="text-2xl text-center font-bold mb-2">{`${greeting}, ${username}`}</h1>
                     <div className="flex justify-center items-center space-x-4">
                         <div>My week</div>
                         <div>0 tasks completed</div>
@@ -64,21 +72,21 @@ const Dashboard = ({ darkMode }) => {
                 <main className="p-6 transition-all duration-300">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* My Tasks */}
-                        <div className="rounded-lg shadow-lg p-4 bg-gray-800 h-70">
+                        <div className={`rounded-lg shadow-lg p-4 ${darkMode ? 'bg-gray-800' : 'bg-white'} h-70`}>
                             <h2 className="text-xl text-white font-bold mb-4 col-span-full">My tasks</h2>
                             {tasks.map(task => (
                                 <TaskCard
                                     key={task.id}
                                     task={task}
-                                    darkMode={darkMode}  // Pass darkMode prop to TaskCard
+                                    darkMode={darkMode}
                                     className={`p-2 rounded-lg transition-all duration-300 transform ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} hover:scale-105 hover:shadow-xl mb-4`}
                                     style={{ height: '150px', width: '100%' }}
                                 />
                             ))}
                         </div>
-                      <Task/>
+                        <Task />
                         {/* Projects */}
-                        <div className="rounded-lg shadow-lg p-4 bg-gray-800 h-70">
+                        <div className={`rounded-lg shadow-lg p-4 ${darkMode ? 'bg-gray-800' : 'bg-white'} h-70`}>
                             <h2 className="text-xl text-white font-bold mb-4">Projects</h2>
                             <div>
                                 {projects.map(project => (

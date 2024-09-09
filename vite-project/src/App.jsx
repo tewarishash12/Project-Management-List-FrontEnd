@@ -37,7 +37,7 @@ const App = () => {
                         <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
 
                         {/* Protected Routes */}
-                        <Route path="/" element={<PrivateRoute><DashBoard darkMode={darkMode} /></PrivateRoute>} />
+                        <Route path="/dashboard" element={<PrivateRoute><DashBoard darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/projects/:id" element={<PrivateRoute><ProjectView darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails darkMode={darkMode} /></PrivateRoute>} />
 
