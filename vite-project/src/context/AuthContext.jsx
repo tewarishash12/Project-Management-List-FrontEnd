@@ -6,8 +6,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    const [loading,setLoading] = useState(true);
+    const url = "http://localhost:3000";
 
     useEffect(() => {
         // Axios interceptor to attach the token to all requests
