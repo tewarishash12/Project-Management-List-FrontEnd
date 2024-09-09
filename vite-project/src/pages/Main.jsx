@@ -20,7 +20,7 @@ function Main() {
         <div className="w-full md:w-1/2 flex justify-center">
           <div className="bg-gradient-to-r from-blue-500 to-indigo-700 rounded-full p-2">
             <img
-              src="./public/main.webp"
+              src="./public/team_image.jpg"
               alt="HR Management"
               className="rounded-full w-64 h-64"
             />
@@ -29,13 +29,11 @@ function Main() {
 
         {/* Text Section */}
         <div className="text-center md:text-left md:ml-10">
-          <h1 className="text-4xl font-bold mt-6 md:mt-0">Human Resources Management</h1>
+          <h1 className="text-4xl font-bold mt-6 md:mt-0">Manage Your Team </h1>
           <p className="mt-4 text-lg">
-            This presentation explores the key aspects and best practices of HRM.
+          Empowering teams to connect, collaborate, and succeed seamlessly across all time zones.
           </p>
-          <button className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            Get Started
-          </button>
+        
         </div>
       </section>
     </div>
