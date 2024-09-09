@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import DarkModeToggle from './components/DarkMode';
 import { AuthProvider } from './context/AuthContext'; // Assuming you are using the Context API for authentication
 import PrivateRoute from './components/PrivateRoute'; // Importing the PrivateRoute component
+import ProfilePage from './pages/Profilepage';
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(() => {
@@ -37,6 +38,7 @@ const App = () => {
 
                         {/* Protected Routes */}
                         <Route path="/dashboard" element={<PrivateRoute><DashBoard darkMode={darkMode} /></PrivateRoute>} />
+                        <Route path="/auth/profile" element={<PrivateRoute><ProfilePage darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/projects/:id" element={<PrivateRoute><ProjectView darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails darkMode={darkMode} /></PrivateRoute>} />
 

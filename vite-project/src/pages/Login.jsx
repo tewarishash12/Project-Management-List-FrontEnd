@@ -10,6 +10,7 @@ const Login = ({ darkMode }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await login(email, password, role); // Pass role to login function
+        console.log('Token after login:', localStorage.getItem('token'));
     };
 
     return (

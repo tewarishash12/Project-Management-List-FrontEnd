@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [loading,setLoading] = useState(true);
     const url = "http://localhost:3000";
@@ -37,7 +38,6 @@ export const AuthProvider = ({ children }) => {
                 const response = await axios.get('http://localhost:3000/auth/profile'); // Adjust the URL if needed
                 setUser(response.data);
             } catch (error) {
-                console.error('Failed to fetch user data:', error);
                 setUser(null);
             } finally {
                 setLoading(false);
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', token);
 
             setUser(user);
-            navigate('/');
+            navigate('/dashboard');
         } catch (error) {
             console.error('Login failed:', error.response?.data?.message || error.message);
             setUser(null);
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', token);
 
             setUser(user);
-            navigate('/');
+            navigate('/dashboard');
         } catch (error) {
             console.error('Signup failed:', error.response?.data?.message || error.message);
             setUser(null);
