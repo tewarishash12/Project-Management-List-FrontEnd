@@ -1,11 +1,15 @@
-// import React from 'react';
-// import { Navigate } from 'react-router-dom';
-// import { useAuth } from '../context/AuthContext';
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-// const PrivateRoute = ({ element: Component, ...rest }) => {
-//     const { user } = useAuth();
+const PrivateRoute = ({ children }) => {
+    const { user, loading } = useAuth();
 
-//     return user ? <Component {...rest} /> : <Navigate to="/auth/login" />;
-// };
+    if (loading) {
+        return <div>Loading...</div>; // You can replace this with a loading spinner or screen
+    }
 
-// export default PrivateRoute;
+    return user ? children : <Navigate to="/auth/login" />;
+};
+
+export default PrivateRoute;

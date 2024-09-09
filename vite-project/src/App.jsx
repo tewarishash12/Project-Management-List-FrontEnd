@@ -7,8 +7,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
 import DarkModeToggle from './components/DarkMode';
-import { AuthProvider } from './context/AuthContext'; // Assuming you are using the Context API for authentication
-// import PrivateRoute from './components/PrivateRoute'; // Importing the PrivateRoute component
+import { AuthProvider } from './context/AuthContext'; // AuthProvider context
+import PrivateRoute from './components/PrivateRoute'; // PrivateRoute component
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(() => {
@@ -26,8 +26,8 @@ const App = () => {
     }, [darkMode]);
 
     return (
-        <AuthProvider>
-            <Router>
+        <Router>
+            <AuthProvider>
                 <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} `}>
                     <Routes>
                         {/* Public Routes */}
@@ -35,23 +35,17 @@ const App = () => {
                         <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
 
                         {/* Protected Routes */}
-                        {/* <Route path="/" element={<Route element={DashBoard} darkMode={darkMode} />} />
-                        <Route path="/projects/:id" element={<Route element={ProjectView} darkMode={darkMode} />} />
-                        <Route path="/tasks/:id" element={<Route element={TaskDetails} darkMode={darkMode} />} /> */}
-
-                        <Route path="/" element={<DashBoard darkMode={darkMode} />} />
-                        <Route path="/projects/:id" element={<ProjectView darkMode={darkMode} />} />
-                        <Route path="/tasks/:id" element={<TaskDetails darkMode={darkMode} />} />
-
-
+                        <Route path="/" element={<PrivateRoute><DashBoard darkMode={darkMode} /></PrivateRoute>} />
+                        <Route path="/projects/:id" element={<PrivateRoute><ProjectView darkMode={darkMode} /></PrivateRoute>} />
+                        <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails darkMode={darkMode} /></PrivateRoute>} />
 
                         {/* Fallback Route */}
                         <Route path="*" element={<NotFound darkMode={darkMode} />} />
                     </Routes>
                 </main>
                 <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-            </Router>
-        </AuthProvider>
+            </AuthProvider>
+        </Router>
     );
 };
 
