@@ -7,7 +7,7 @@ const AuthContext = createContext();
 // AuthProvider component to wrap your app
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const url = "http://localhost:3000";
+    const url = "https://backend-7coa.onrender.com";
 
     // Check if user is already logged in on initial render
     useEffect(() => {
