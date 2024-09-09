@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DashBoard from './pages/DashBoard';
 import ProjectView from './pages/ProjectView';
 import TaskDetails from './pages/TaskDetails';
+import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
@@ -31,6 +32,7 @@ const App = () => {
                 <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} `}>
                     <Routes>
                         {/* Public Routes */}
+                        <Route path="/" element={<Main darkMode={darkMode} />} />
                         <Route path="/auth/login" element={<Login darkMode={darkMode} />} />
                         <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
 
