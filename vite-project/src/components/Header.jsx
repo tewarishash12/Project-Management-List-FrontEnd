@@ -13,7 +13,7 @@ const Header = ({ toggleSidebar, darkMode }) => {
                         onClick={toggleSidebar}
                     ></i>
                     <a href="#" className="flex items-center">
-                        <span className="text-blue-600 text-lg font-semibold ml-2"><i class="fa-solid fa-cube pr-4"></i>PeakPlanner</span>
+                        <span className="text-blue-600 text-lg font-semibold ml-2"><i className="fa-solid fa-cube pr-4"></i>PeakPlanner</span>
                     </a>
                 </div>
 

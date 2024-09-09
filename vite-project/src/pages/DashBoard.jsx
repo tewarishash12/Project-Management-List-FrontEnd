@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import TaskCard from '../components/TaskCard';
 import Footer from '../components/Footer';
+import Task from '../components/task';
 
 const Dashboard = ({ darkMode }) => {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -75,7 +76,7 @@ const Dashboard = ({ darkMode }) => {
                                 />
                             ))}
                         </div>
-
+                      <Task/>
                         {/* Projects */}
                         <div className="rounded-lg shadow-lg p-4 bg-gray-800 h-70">
                             <h2 className="text-xl text-white font-bold mb-4">Projects</h2>
