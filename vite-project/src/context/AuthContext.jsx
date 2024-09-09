@@ -7,7 +7,7 @@ const AuthContext = createContext();
 // AuthProvider component to wrap your app
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const url = "https://backend-7coa.onrender.com";
+    const url = "http://localhost:3000";
 
     // Check if user is already logged in on initial render
     useEffect(() => {
@@ -18,12 +18,12 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const signup = async (username, email, password) => {
+    const signup = async (username, email, password, role) => {
         try {
             const res = await fetch(`${url}/auth/signup`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ username, email, password })
+                body: JSON.stringify({ username, email, password, role })
             });
             if (!res.ok) throw new Error("Failed to Sign Up");
 
@@ -37,12 +37,12 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const login = async (email, password) => {
+    const login = async (email, password, role) => {
         try {
             const res = await fetch(`${url}/auth/login`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password, role })
             });
             if (!res.ok) throw new Error("Login failed");
 
@@ -73,19 +73,19 @@ export const useAuth = () => {
 };
 
 // PrivateRoute component
-export const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { user } = useAuth();
+// export const PrivateRoute = ({ component: Component, ...rest }) => {
+//     const { user } = useAuth();
 
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                user ? (
-                    <Component {...props} />
-                ) : (
-                    <Navigate to="/auth/login" />
-                )
-            }
-        />
-    );
-};
+//     return (
+//         <Route
+//             {...rest}
+//             render={(props) =>
+//                 user ? (
+//                     <Component {...props} />
+//                 ) : (
+//                     <Navigate to="/auth/login" />
+//                 )
+//             }
+//         />
+//     );
+// };

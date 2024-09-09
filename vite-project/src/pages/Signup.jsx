@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext'; // Adjust the path if needed
+// import { useAuth } from '../context/AuthContext'; // Adjust the path if needed
 import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = ({ darkMode }) => {
@@ -8,7 +8,7 @@ const Signup = ({ darkMode }) => {
     const [role, setRole] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { signup } = useAuth(); // Access signup function from AuthContext
+    // const { signup } = useAuth(); // Access signup function from AuthContext
 
     const handleRoleChange = (e) => {
         setRole(e.target.value);
@@ -16,8 +16,14 @@ const Signup = ({ darkMode }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!role) {
+            setError('Please select a role.');
+            return;
+        }
+
         try {
-            await signup(username, email, password, role); // Include role in signup
+            // await signup(username, email, password, role); // Include role in signup
             navigate('/');
         } catch (error) {
             console.error('Signup failed:', error);
@@ -77,7 +83,7 @@ const Signup = ({ darkMode }) => {
                         <option value="" disabled>Select a role</option>
                         <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
-                        <option value="teamMember">Team Member</option>
+                        <option value="teammember">Team Member</option>
                     </select>
                 </div>
                 <button
@@ -86,9 +92,9 @@ const Signup = ({ darkMode }) => {
                 >
                     Signup
                 </button>
-                <Link to="/auth/login" className="block mt-5 text-blue-600 hover:text-blue-700 hover:underline text-center">
-                    Already Registered? Login
-                </Link>
+                <div className="block mt-5 text-center">
+                    Already Registered? <Link to="/auth/login" className='text-blue-600 hover:text-blue-700 hover:underline'>Login</Link>
+                </div>
             </form>
         </div>
     );

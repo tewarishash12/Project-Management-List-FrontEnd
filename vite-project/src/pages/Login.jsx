@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext'; // Adjust path if needed
+// import { useAuth } from '../context/AuthContext'; // Adjust path if needed
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = ({ darkMode }) => {
@@ -10,7 +10,7 @@ const Login = ({ darkMode }) => {
     const [roleLabel, setRoleLabel] = useState('Select a role'); // Add state for role label
     const [error, setError] = useState(''); // Add state for error message
 
-    const { login } = useAuth(); // Access login function from AuthContext
+    // const { login } = useAuth(); // Access login function from AuthContext
 
     const handleRoleChange = (e) => {
         const selectedRole = e.target.value;
@@ -23,8 +23,8 @@ const Login = ({ darkMode }) => {
             case 'manager':
                 setRoleLabel('manager');
                 break;
-            case 'teamMember':
-                setRoleLabel('teamMember');
+            case 'teammember':
+                setRoleLabel('teammember');
                 break;
             default:
                 setRoleLabel('Select a role');
@@ -40,7 +40,7 @@ const Login = ({ darkMode }) => {
         }
 
         try {
-            await login(email, password);
+            // await login(email, password);
             navigate('/');
         } catch (error) {
             setError('Login failed. Please check your credentials and try again.');
@@ -93,7 +93,7 @@ const Login = ({ darkMode }) => {
                         <option disabled>Select a role</option>
                         <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
-                        <option value="teamMember">Team Member</option>
+                        <option value="teammember">Team Member</option>
                     </select>
                 </div>
 
@@ -101,9 +101,9 @@ const Login = ({ darkMode }) => {
                     Login
                 </button>
 
-                <Link to="/auth/signup" className="block mt-8 text-blue-600 hover:text-blue-700 hover:underline text-center">
-                    Don't have an account? Sign up
-                </Link>
+                <div className="block mt-8 text-center">
+                    Don't have an account? <Link to="/auth/signup" className='text-blue-600 hover:text-blue-700 hover:underline'>Sign up</Link>
+                </div>
             </form>
         </div>
     );

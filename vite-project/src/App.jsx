@@ -8,7 +8,7 @@ import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
 import DarkModeToggle from './components/DarkMode';
 import { AuthProvider } from './context/AuthContext'; // Assuming you are using the Context API for authentication
-import PrivateRoute from './components/PrivateRoute'; // Importing the PrivateRoute component
+// import PrivateRoute from './components/PrivateRoute'; // Importing the PrivateRoute component
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(() => {
@@ -35,9 +35,15 @@ const App = () => {
                         <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
 
                         {/* Protected Routes */}
-                        <Route path="/" element={<PrivateRoute element={DashBoard} darkMode={darkMode} />} />
-                        <Route path="/projects/:id" element={<PrivateRoute element={ProjectView} darkMode={darkMode} />} />
-                        <Route path="/tasks/:id" element={<PrivateRoute element={TaskDetails} darkMode={darkMode} />} />
+                        {/* <Route path="/" element={<Route element={DashBoard} darkMode={darkMode} />} />
+                        <Route path="/projects/:id" element={<Route element={ProjectView} darkMode={darkMode} />} />
+                        <Route path="/tasks/:id" element={<Route element={TaskDetails} darkMode={darkMode} />} /> */}
+
+                        <Route path="/" element={<DashBoard darkMode={darkMode} />} />
+                        <Route path="/projects/:id" element={<ProjectView darkMode={darkMode} />} />
+                        <Route path="/tasks/:id" element={<TaskDetails darkMode={darkMode} />} />
+
+
 
                         {/* Fallback Route */}
                         <Route path="*" element={<NotFound darkMode={darkMode} />} />
