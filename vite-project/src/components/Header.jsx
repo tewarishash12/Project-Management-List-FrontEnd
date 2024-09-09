@@ -32,7 +32,7 @@ const Header = ({ toggleSidebar, darkMode }) => {
                         <Link to="/auth/login">Login</Link>
                     </button>
                     <button className="hover:bg-blue-400 bg-blue-600 rounded-full p-1 font-sm pl-4 pr-4">
-                        <Link to="/auth/signup">Signup</Link>
+                        <Link to="/auth/logout">Logout</Link>
                     </button>
                 </div>
 

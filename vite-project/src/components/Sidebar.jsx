@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-// import Chat from './Chat';  // Import the Chat component
 
 const Sidebar = ({ darkMode }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [showChat, setShowChat] = useState(false); // State for showing chat
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
-    };
-
-    const toggleChat = () => {
-        setShowChat(!showChat);  // Toggle chat visibility
     };
 
     return (
@@ -22,23 +16,17 @@ const Sidebar = ({ darkMode }) => {
                 <li className="py-2 pl-4 hover:bg-gray-200 hover:text-black transition-colors duration-200">
                     <a href="#"><i className="fa-solid fa-list-check pr-4"></i>My Task</a>
                 </li>
-                <li className="py-2 pl-4 hover:bg-gray-300 hover:text-black transition-colors duration-200">
-                    <a href="#"><i className="fa-solid fa-plus pr-4"></i>Create Tasks</a>
-                </li>
-                <li className="py-2 pl-4 hover:bg-gray-300 hover:text-black transition-colors duration-200" onClick={toggleChat}>
-                    <i className="fa-solid fa-comments pr-4"></i><a href="#">Inbox</a>
-                </li>
-                <li className="py-2 pl-4 hover:bg-gray-300 hover:text-black transition-colors duration-200">
-                    <i className="fa-solid fa-bell pr-4"></i><a href="#">Notification</a>
-                </li>
-            </ul>
-
-            {/* Conditionally render the Chat component */}
-            {showChat && (
-                <div className="absolute top-0 right-0 h-screen w-1/3 bg-white shadow-lg">
-                    {/* <Chat /> */}
-                </div>
-            )}
+                        <li className="py-2 pl-4 hover:bg-gray-300 hover:text-black transition-colors duration-200">
+                          <a href="#"><i className="fa-solid fa-plus pr-4"></i>Create Tasks</a>
+                        </li>
+                        <li className="py-2 pl-4 hover:bg-gray-300 hover:text-black transition-colors duration-200">
+                        <i className="fa-solid fa-comments pr-4"></i><a href="#">Inbox</a>
+                        </li>
+                        <li className="py-2 pl-4 hover:bg-gray-300 hover:text-black transition-colors duration-200">
+                        <i className="fa-solid fa-bell pr-4"></i><a href="#">Notification</a>
+                        </li>
+            </ul>  
+    
         </div>
     );
 };
