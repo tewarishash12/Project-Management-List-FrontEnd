@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Login = ({ darkMode }) => {
     const { login } = useAuth();
@@ -75,7 +76,7 @@ const Login = ({ darkMode }) => {
                 {/* Sign Up Link */}
                 <div className="mt-6 text-center">
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        Don’t have an account? <a href="#" className="text-blue-500 hover:underline">Sign up</a>
+                        Don’t have an account? <Link to="/auth/signup" className="text-blue-500 hover:underline">Sign up</Link>
                     </p>
                 </div>
             </div>
