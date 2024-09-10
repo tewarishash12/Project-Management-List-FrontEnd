@@ -16,10 +16,10 @@ const TaskForm = () => {
     useEffect(() => {
         const fetchOptions = async () => {
             try {
-                // Fetch projects and team members for dropdowns
-                const [projectsRes, teammembersRes] = await Promise.all([
+                const [projectsRes, teammembersRes, userRes] = await Promise.all([
                     axios.get('http://localhost:3000/projects'),
-                    axios.get('http://localhost:3000/teammembers', {
+                    axios.get('http://localhost:3000/teammembers'),
+                    axios.get('http://localhost:3000/user/me', { // Fetch current user details
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
                         }
@@ -28,6 +28,9 @@ const TaskForm = () => {
 
                 setProjects(Array.isArray(projectsRes.data) ? projectsRes.data : []);
                 setTeammembers(Array.isArray(teammembersRes.data) ? teammembersRes.data : []);
+                
+                // Check if the user is an admin
+                setIsAdmin(userRes.data.role === 'admin');
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setProjects([]);
@@ -64,8 +67,6 @@ const TaskForm = () => {
     
             const result = await response.json();
             if (response.ok) {
-                console.log('Task added:', result);
-                // Reset form fields
                 setTitle('');
                 setContent('');
                 setStatus('pending');
@@ -154,14 +155,22 @@ const TaskForm = () => {
                     <option value="High">High</option>
                 </select>
             </div>
-            <div>
-                <label htmlFor="assignedTo" className="block">Assigned To</label>
-                <CustomDropdown
-                    options={teammembers}
-                    selectedValues={assignedTo}
-                    onChange={setAssignedTo}
-                />
-            </div>
+            {isAdmin && (
+                <div>
+                    <label htmlFor="assignedTo" className="block">Assigned To</label>
+                    <select
+                        id="assignedTo"
+                        value={assignedTo}
+                        onChange={(e) => setAssignedTo(e.target.value)}
+                        className="border p-2 w-full"
+                    >
+                        <option value="">Select Team Member</option>
+                        {teammembers.map(user => (
+                            <option key={user._id} value={user._id}>{user.username}</option>
+                        ))}
+                    </select>
+                </div>
+            )}
             <button type="submit" className="bg-blue-500 text-white p-2">Add Task</button>
         </form>
     );
