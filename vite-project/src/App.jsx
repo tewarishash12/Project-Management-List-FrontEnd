@@ -45,8 +45,11 @@ const App = () => {
                         <Route path="/projects/:id" element={<PrivateRoute><ProjectView darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails darkMode={darkMode} /></PrivateRoute>} />
                         {/* Form Routes */}
-                        <Route path="/projects" element={<PrivateRoute><ProjectForm darkMode={darkMode} /></PrivateRoute>} />
+                        <Route path="/projects/add" element={<PrivateRoute><ProjectForm darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/tasks/add" element={<PrivateRoute><TaskForm darkMode={darkMode} /></PrivateRoute>} />
+
+                        {/* Display Routes */}
+                        <Route path="/projects" element={<PrivateRoute><ProjectForm darkMode={darkMode} /></PrivateRoute>} />
                         {/* Fallback Route */}
                         <Route path="*" element={<NotFound darkMode={darkMode} />} />
                     </Routes>

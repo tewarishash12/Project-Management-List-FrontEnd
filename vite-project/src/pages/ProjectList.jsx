@@ -27,7 +27,7 @@ const ProjectList = () => {
                         <h2 className="text-xl font-semibold mb-2">{project.name}</h2>
                         <p className="text-gray-600 mb-2">{project.description}</p>
                         <div className="mt-4">
-                            <Link href={`/projects/${project._id}`} className="text-blue-500 hover:underline">View Details</Link>
+                            <Link to={`/projects/${project._id}`} className="text-blue-500 hover:underline">View Details</Link>
                         </div>
                     </div>
                 ))}

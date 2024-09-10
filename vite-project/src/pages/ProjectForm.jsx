@@ -28,7 +28,7 @@ const ProjectForm = () => {
         e.preventDefault();
 
         try {
-            const newProjectResponse = await fetch('http://localhost:3000/projects', {
+            const newProjectResponse = await fetch('http://localhost:3000/projects/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
