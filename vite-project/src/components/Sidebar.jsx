@@ -11,10 +11,10 @@ const Sidebar = ({ darkMode }) => {
                     <Link to="/dashboard"><i className="fa-solid fa-house pr-4"></i>Home</Link>
                 </li>
                 <li className={`py-2 pl-4 hover:bg-${darkMode ? 'gray-700' : 'gray-200'} hover:text-${darkMode ? 'white' : 'black'} transition-colors duration-200`}>
-                    <Link to="/tasks"><i className="fa-solid fa-list-check pr-4"></i>My Task</Link>
+                    <Link to="/projects"><i className="fa-solid fa-list-check pr-4"></i>My Projects</Link>
                 </li>
                 <li className={`py-2 pl-4 hover:bg-${darkMode ? 'gray-600' : 'gray-300'} hover:text-${darkMode ? 'white' : 'black'} transition-colors duration-200`}>
-                    <Link to="/tasks/add"><i className="fa-solid fa-plus pr-4"></i>Create Tasks</Link>
+                    <Link to="/projects/add"><i className="fa-solid fa-plus pr-4"></i>Create Project</Link>
                 </li>
                 <li className={`py-2 pl-4 hover:bg-${darkMode ? 'gray-600' : 'gray-300'} hover:text-${darkMode ? 'white' : 'black'} transition-colors duration-200`}>
                     <Link to="/inbox"><i className="fa-solid fa-comments pr-4"></i>Inbox</Link>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectForm = () => {
     const [title, setTitle] = useState('');
@@ -8,6 +9,7 @@ const ProjectForm = () => {
     const [managers, setManagers] = useState([]);
     const [assignedManager, setAssignedManager] = useState('');
     const [tasks, setTasks] = useState([{ taskTitle: '', taskDescription: '' }]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchManagers = async () => {
@@ -69,6 +71,7 @@ const ProjectForm = () => {
             setPriority('Medium');
             setAssignedManager('');
             setTasks([{ taskTitle: '', taskDescription: '' }]);
+            navigate('/projects');
         } catch (err) {
             console.error('Error adding project:', err);
         }
