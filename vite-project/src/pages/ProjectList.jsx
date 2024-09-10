@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const ProjectList = () => {
     const [projects, setProjects] = useState([]);
-    const url = `https://backend-7coa.onrender.com`;
+    const url = `http://localhost:3000`;
 
     useEffect(() => {
         const fetchProjects = async () => {
