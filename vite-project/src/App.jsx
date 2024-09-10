@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DashBoard from './pages/DashBoard';
-import ProjectView from './pages/ProjectView';
 import TaskDetails from './pages/TaskDetails';
 import Main from './pages/Main';
 import Login from './pages/Login';
@@ -43,8 +42,7 @@ const App = () => {
                         {/* Protected Routes */}
                         <Route path="/dashboard" element={<PrivateRoute><DashBoard darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/auth/profile" element={<PrivateRoute><ProfilePage darkMode={darkMode} /></PrivateRoute>} />
-                        <Route path="/projects/:id" element={<PrivateRoute><ProjectView darkMode={darkMode} /></PrivateRoute>} />
-                        <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails darkMode={darkMode} /></PrivateRoute>} />
+                            <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails darkMode={darkMode} /></PrivateRoute>} />
                         {/* Form Routes */}
                         <Route path="/projects/add" element={<PrivateRoute><ProjectForm darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/tasks/add" element={<PrivateRoute><TaskForm darkMode={darkMode} /></PrivateRoute>} />

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { decodeJwt } from 'jose';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import TaskCard from '../components/TaskCard';
@@ -39,11 +38,6 @@ const Dashboard = ({ darkMode }) => {
         greeting = 'Good evening';
     }
 
-    // Decode token to get username
-    const token = localStorage.getItem('token');
-    const decodedToken = token ? decodeJwt(token) : null;
-    const username = decodedToken ? decodedToken.username : "User";
-
     return (
         <div 
             className={`flex flex-col min-h-screen transition-all duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'}`}
@@ -60,7 +54,7 @@ const Dashboard = ({ darkMode }) => {
                 {/* Greeting Section */}
                 <div className="px-6 py-4 flex justify-center flex-col">
                     <p className="text-lg text-center">{currentDate}</p>
-                    <h1 className="text-2xl text-center font-bold mb-2">{`${greeting}, ${username}`}</h1>
+                    <h1 className="text-2xl text-center font-bold mb-2">{`${greeting}`}</h1>
                     <div className="flex justify-center items-center space-x-4">
                         <div>My week</div>
                         <div>0 tasks completed</div>
