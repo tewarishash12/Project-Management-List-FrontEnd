@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const ProjectList = () => {
     const [projects, setProjects] = useState([]);
@@ -26,7 +27,7 @@ const ProjectList = () => {
                         <h2 className="text-xl font-semibold mb-2">{project.name}</h2>
                         <p className="text-gray-600 mb-2">{project.description}</p>
                         <div className="mt-4">
-                            <a href={`/projects/${project._id}`} className="text-blue-500 hover:underline">View Details</a>
+                            <Link href={`/projects/${project._id}`} className="text-blue-500 hover:underline">View Details</Link>
                         </div>
                     </div>
                 ))}

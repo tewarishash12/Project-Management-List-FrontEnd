@@ -11,6 +11,8 @@ import DarkModeToggle from './components/DarkMode';
 import { AuthProvider } from './context/AuthContext'; // Assuming you are using the Context API for authentication
 import PrivateRoute from './components/PrivateRoute'; // Importing the PrivateRoute component
 import ProfilePage from './pages/Profilepage';
+import ProjectForm from './pages/ProjectForm';
+import TaskForm from './pages/TaskForm';
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(() => {
@@ -33,6 +35,7 @@ const App = () => {
                 <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} `}>
                     <Routes>
                         {/* Public Routes */}
+                        <Route path="/" element={<Main darkMode={darkMode} />} />
                         <Route path="/auth/login" element={<Login darkMode={darkMode} />} />
                         <Route path="/auth/signup" element={<Signup darkMode={darkMode} />} />
 
@@ -41,7 +44,9 @@ const App = () => {
                         <Route path="/auth/profile" element={<PrivateRoute><ProfilePage darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/projects/:id" element={<PrivateRoute><ProjectView darkMode={darkMode} /></PrivateRoute>} />
                         <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails darkMode={darkMode} /></PrivateRoute>} />
-
+                        {/* Form Routes */}
+                        <Route path="/projects" element={<PrivateRoute><ProjectForm darkMode={darkMode} /></PrivateRoute>} />
+                        <Route path="/tasks" element={<PrivateRoute><TaskForm darkMode={darkMode} /></PrivateRoute>} />
                         {/* Fallback Route */}
                         <Route path="*" element={<NotFound darkMode={darkMode} />} />
                     </Routes>

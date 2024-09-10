@@ -6,25 +6,27 @@ const ProjectForm = () => {
     const [content, setContent] = useState('');
     const [generatedBy, setGeneratedBy] = useState('');
     const [project, setProject] = useState('');
-    const [priority, setPriority] = useState('');
+    const [priority, setPriority] = useState('Medium'); // Set default value to 'Medium'
     const [users, setUsers] = useState([]);
-    const [projects, setProjects] = useState([]); // Initialize as an empty array
+    const [projects, setProjects] = useState([]);
 
     useEffect(() => {
         const fetchOptions = async () => {
             try {
                 const [usersRes, projectsRes] = await Promise.all([
-                    axios.get('/users'),
-                    axios.get('/api/projects')
+                    axios.get('http://localhost:3000/users'),
+                    axios.get('http://localhost:3000/projects')
                 ]);
 
-                console.log('Projects Response:', projectsRes.data); // Log the response
+                const usersData = Array.isArray(usersRes.data) ? usersRes.data : [];
+                const projectsData = Array.isArray(projectsRes.data) ? projectsRes.data : [];
 
-                setUsers(usersRes.data);
-                setProjects(Array.isArray(projectsRes.data) ? projectsRes.data : []); // Ensure projects is an array
+                setUsers(usersData);
+                setProjects(projectsData);
             } catch (err) {
                 console.error(err);
-                setProjects([]); // Set projects to an empty array on error
+                setUsers([]);
+                setProjects([]);
             }
         };
         fetchOptions();
@@ -33,13 +35,21 @@ const ProjectForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/projects', {
-                title,
-                content,
-                generatedBy,
-                project,
-                priority,
+            const response = await fetch('http://localhost:3000/projects', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,  // Replace with your actual token
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title,
+                    content,
+                    generatedBy,
+                    project,
+                    priority
+                })
             });
+
             console.log('Project added:', response.data);
         } catch (err) {
             console.error('Error adding project:', err);
@@ -73,11 +83,14 @@ const ProjectForm = () => {
                     onChange={(e) => setGeneratedBy(e.target.value)}
                 >
                     <option value="">Select User</option>
-                    {users.map((user) => (
+                    {users && Array.isArray(users) && users.map((user) => (
                         <option key={user._id} value={user._id}>
                             {user.name}
                         </option>
                     ))}
+                    <option value="shashwat">
+                        Shashwat
+                    </option>
                 </select>
             </div>
             <div>
@@ -93,16 +106,20 @@ const ProjectForm = () => {
                             {project.title}
                         </option>
                     ))}
+                    <option value="hackathon">Hackathon</option>
                 </select>
             </div>
             <div>
                 <label htmlFor="priority">Priority</label>
-                <input
+                <select
                     id="priority"
-                    type="text"
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
-                />
+                >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
             </div>
             <button type="submit">Add Project</button>
         </form>

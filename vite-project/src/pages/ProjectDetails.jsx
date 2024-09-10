@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 
 const ProjectDetails = () => {
     const { projectId } = useParams();
@@ -30,7 +30,7 @@ const ProjectDetails = () => {
                 {project.tasks && project.tasks.length > 0 ? (
                     project.tasks.map(task => (
                         <li key={task._id} className="mb-2">
-                            <a href={`/tasks/${task._id}`} className="text-blue-500 hover:underline">{task.title}</a>
+                            <Link href={`/tasks/${task._id}`} className="text-blue-500 hover:underline">{task.title}</Link>
                         </li>
                     ))
                 ) : (
