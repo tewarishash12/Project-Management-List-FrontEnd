@@ -18,8 +18,7 @@ const TaskForm = () => {
             try {
                 const [projectsRes, teammembersRes, userRes] = await Promise.all([
                     axios.get('http://localhost:3000/projects'),
-                    axios.get('http://localhost:3000/teammembers'),
-                    axios.get('http://localhost:3000/user/me', { // Fetch current user details
+                    axios.get('http://localhost:3000/teammembers', { // Fetch current user details
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
                         }
