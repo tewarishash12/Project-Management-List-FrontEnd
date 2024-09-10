@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute'; // Importing the PrivateRo
 import ProfilePage from './pages/Profilepage';
 import ProjectForm from './pages/ProjectForm';
 import TaskForm from './pages/TaskForm';
+import ProjectList from './pages/ProjectList';
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(() => {
@@ -49,7 +50,7 @@ const App = () => {
                         <Route path="/tasks/add" element={<PrivateRoute><TaskForm darkMode={darkMode} /></PrivateRoute>} />
 
                         {/* Display Routes */}
-                        <Route path="/projects" element={<PrivateRoute><ProjectForm darkMode={darkMode} /></PrivateRoute>} />
+                        <Route path="/projects" element={<PrivateRoute><ProjectList darkMode={darkMode} /></PrivateRoute>} />
                         {/* Fallback Route */}
                         <Route path="*" element={<NotFound darkMode={darkMode} />} />
                     </Routes>
