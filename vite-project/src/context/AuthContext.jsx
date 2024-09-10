@@ -7,35 +7,16 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    const [loading,setLoading] = useState(true);
-    const url = "http://localhost:3000";
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Axios interceptor to attach the token to all requests
-        axios.interceptors.request.use(
-            (config) => {
-                const token = localStorage.getItem('token');
-                if (token) {
-                    config.headers['Authorization'] = `Bearer ${token}`;
-                }
-                return config;
-            },
-            (error) => {
-                return Promise.reject(error);
-            }
-        );
+        // Axios interceptor to automatically include cookies with requests
+        axios.defaults.withCredentials = true;
 
-        // Check for existing token in localStorage and fetch user data
+        // Check for an existing session by calling the profile route
         const checkUserLoggedIn = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                setUser(null);
-                setLoading(false);
-                return;
-            }
-
             try {
-                const response = await axios.get('http://localhost:3000/auth/profile'); // Adjust the URL if needed
+                const response = await axios.get('http://localhost:3000/auth/profile');
                 setUser(response.data);
             } catch (error) {
                 setUser(null);
@@ -50,10 +31,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password, role) => {
         try {
             const response = await axios.post('http://localhost:3000/auth/login', { email, password, role });
-            const { token, user } = response.data;
-
-            // Store the token in localStorage
-            localStorage.setItem('token', token);
+            const { user } = response.data;
 
             setUser(user);
             navigate('/dashboard');
@@ -66,10 +44,7 @@ export const AuthProvider = ({ children }) => {
     const signup = async (username, email, password, role) => {
         try {
             const response = await axios.post('http://localhost:3000/auth/signup', { username, email, password, role });
-            const { token, user } = response.data;
-
-            // Store the token in localStorage
-            localStorage.setItem('token', token);
+            const { user } = response.data;
 
             setUser(user);
             navigate('/dashboard');
@@ -83,7 +58,6 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios.post('http://localhost:3000/auth/logout');
             setUser(null);
-            localStorage.removeItem('token'); // Remove the token from localStorage
             navigate('/auth/login');
         } catch (error) {
             console.error('Logout failed:', error.response?.data?.message || error.message);

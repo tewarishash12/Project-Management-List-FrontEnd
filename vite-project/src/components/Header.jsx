@@ -1,18 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Adjust the import path if necessary
 
 const Header = ({ darkMode, isSidebarCollapsed }) => {
+    const { logout } = useAuth(); // Use the logout function from AuthContext
+    const navigate = useNavigate(); // For navigation after logout
+
+    const handleLogout = async () => {
+        try {
+            await logout(); // Call the logout function
+            navigate('/auth/login'); // Redirect to login page after successful logout
+        } catch (error) {
+            console.error('Logout failed:', error.message);
+        }
+    };
+
     return (
         <nav className={`bg-white shadow-sm w-full ${darkMode ? 'bg-gray-800 text-white' : 'text-gray-900'} transition-all duration-300`}>
             <div className="container mx-auto px-4 py-2 flex justify-between items-center w-full">
 
                 {/* Left Section: Brand */}
                 <div className="flex items-center space-x-4">
-                    <a href="#" className="flex items-center">
+                    <Link to="/dashboard" className="flex items-center">
                         <span className="text-blue-600 text-lg font-semibold ml-2">
                             <i className="fa-solid fa-cube pr-4"></i>PeakPlanner
                         </span>
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Right Section: Search Bar */}
@@ -26,11 +39,11 @@ const Header = ({ darkMode, isSidebarCollapsed }) => {
 
                 {/* Middle Section: Links */}
                 <div className="hidden md:flex items-center space-x-6">
-                    <button className="hover:bg-blue-400 bg-blue-600 rounded-full p-1 font-sm pl-4 pr-4">
-                        <Link to="/auth/login">Login</Link>
-                    </button>
-                    <button className="hover:bg-blue-400 bg-blue-600 rounded-full p-1 font-sm pl-4 pr-4">
-                        <Link to="/auth/logout">Logout</Link>
+                    <button
+                        onClick={handleLogout} 
+                        className="hover:bg-blue-400 bg-blue-600 text-white rounded-full p-1 font-sm pl-4 pr-4"
+                    >
+                        Logout
                     </button>
                 </div>
 
