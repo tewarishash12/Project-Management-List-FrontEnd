@@ -7,6 +7,7 @@ const ProjectForm = () => {
     const [priority, setPriority] = useState('Medium');
     const [managers, setManagers] = useState([]);
     const [assignedManager, setAssignedManager] = useState('');
+    const [tasks, setTasks] = useState([{ taskTitle: '', taskDescription: '' }]);
 
     useEffect(() => {
         const fetchManagers = async () => {
@@ -22,6 +23,22 @@ const ProjectForm = () => {
         fetchManagers();
     }, []);
 
+    const handleTaskChange = (index, e) => {
+        const { name, value } = e.target;
+        const newTasks = [...tasks];
+        newTasks[index][name] = value;
+        setTasks(newTasks);
+    };
+
+    const handleAddTask = () => {
+        setTasks([...tasks, { taskTitle: '', taskDescription: '' }]);
+    };
+
+    const handleRemoveTask = (index) => {
+        const newTasks = tasks.filter((_, i) => i !== index);
+        setTasks(newTasks);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -35,7 +52,8 @@ const ProjectForm = () => {
                     title,
                     content,
                     priority,
-                    managers: [assignedManager]
+                    managers: [assignedManager],
+                    tasks
                 })
             });
 
@@ -50,6 +68,7 @@ const ProjectForm = () => {
             setContent('');
             setPriority('Medium');
             setAssignedManager('');
+            setTasks([{ taskTitle: '', taskDescription: '' }]);
         } catch (err) {
             console.error('Error adding project:', err);
         }
@@ -116,6 +135,51 @@ const ProjectForm = () => {
                             <option value="">No Managers Available</option>
                         )}
                     </select>
+                </div>
+                
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Tasks</label>
+                    {tasks.map((task, index) => (
+                        <div key={index} className="space-y-4">
+                            <div>
+                                <label htmlFor={`taskTitle-${index}`} className="block text-sm font-medium text-gray-700">Task Title</label>
+                                <input
+                                    id={`taskTitle-${index}`}
+                                    name="taskTitle"
+                                    type="text"
+                                    value={task.taskTitle}
+                                    onChange={(e) => handleTaskChange(index, e)}
+                                    className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor={`taskDescription-${index}`} className="block text-sm font-medium text-gray-700">Task Description</label>
+                                <textarea
+                                    id={`taskDescription-${index}`}
+                                    name="taskDescription"
+                                    value={task.taskDescription}
+                                    onChange={(e) => handleTaskChange(index, e)}
+                                    className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                                    rows="2"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => handleRemoveTask(index)}
+                                className="text-red-500 hover:text-red-700"
+                            >
+                                Remove Task
+                            </button>
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={handleAddTask}
+                        className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:shadow-lg transition duration-200"
+                    >
+                        Add Task
+                    </button>
                 </div>
                 
                 <button

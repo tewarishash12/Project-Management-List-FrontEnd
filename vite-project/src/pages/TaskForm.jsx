@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CustomDropdown from './CustomDropdown'; // Import the custom dropdown component
 
 const TaskForm = () => {
     const [title, setTitle] = useState('');
@@ -8,19 +9,17 @@ const TaskForm = () => {
     const [dueDate, setDueDate] = useState('');
     const [project, setProject] = useState('');
     const [priority, setPriority] = useState('Medium');
-    const [assignedTo, setAssignedTo] = useState('');
+    const [assignedTo, setAssignedTo] = useState([]);
     const [projects, setProjects] = useState([]);
     const [teammembers, setTeammembers] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const fetchOptions = async () => {
             try {
                 // Fetch projects and team members for dropdowns
-                const [projectsRes, teammembersRes, userRes] = await Promise.all([
+                const [projectsRes, teammembersRes] = await Promise.all([
                     axios.get('http://localhost:3000/projects'),
-                    axios.get('http://localhost:3000/teammembers'),
-                    axios.get('http://localhost:3000/user/me', { // Fetch current user details
+                    axios.get('http://localhost:3000/teammembers', {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
                         }
@@ -29,9 +28,6 @@ const TaskForm = () => {
 
                 setProjects(Array.isArray(projectsRes.data) ? projectsRes.data : []);
                 setTeammembers(Array.isArray(teammembersRes.data) ? teammembersRes.data : []);
-                
-                // Check if the user is an admin
-                setIsAdmin(userRes.data.role === 'admin');
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setProjects([]);
@@ -48,29 +44,24 @@ const TaskForm = () => {
                 alert('Please select a project');
                 return;
             }
-
-            if (!isAdmin) {
-                alert('You do not have permission to add tasks or assign team members.');
-                return;
-            }
-
-            const response = await fetch(`http://localhost:3000/tasks/project/${project}`, {
+            
+            const response = await fetch(`http://localhost:3000/tasks/project/add/${project}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json'
                 },
+                credentials:'include',
                 body: JSON.stringify({
                     title,
                     content,
                     status,
                     dueDate,
                     priority,
-                    project,
                     assignedTo
                 })
             });
-
+    
             const result = await response.json();
             if (response.ok) {
                 console.log('Task added:', result);
@@ -80,7 +71,7 @@ const TaskForm = () => {
                 setStatus('pending');
                 setDueDate('');
                 setPriority('Medium');
-                setAssignedTo('');
+                setAssignedTo([]);
                 setProject('');
             } else {
                 console.error('Error adding task:', result);
@@ -88,7 +79,7 @@ const TaskForm = () => {
         } catch (err) {
             console.error('Error adding task:', err);
         }
-    };
+    };    
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 p-4">
@@ -163,22 +154,14 @@ const TaskForm = () => {
                     <option value="High">High</option>
                 </select>
             </div>
-            {isAdmin && (
-                <div>
-                    <label htmlFor="assignedTo" className="block">Assigned To</label>
-                    <select
-                        id="assignedTo"
-                        value={assignedTo}
-                        onChange={(e) => setAssignedTo(e.target.value)}
-                        className="border p-2 w-full"
-                    >
-                        <option value="">Select Team Member</option>
-                        {teammembers.map(user => (
-                            <option key={user._id} value={user._id}>{user.username}</option>
-                        ))}
-                    </select>
-                </div>
-            )}
+            <div>
+                <label htmlFor="assignedTo" className="block">Assigned To</label>
+                <CustomDropdown
+                    options={teammembers}
+                    selectedValues={assignedTo}
+                    onChange={setAssignedTo}
+                />
+            </div>
             <button type="submit" className="bg-blue-500 text-white p-2">Add Task</button>
         </form>
     );

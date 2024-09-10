@@ -44,7 +44,12 @@ const ProjectList = () => {
                             Created At: {new Date(project.createdAt).toLocaleDateString()}
                         </p>
                         <div className="mt-4 flex justify-between items-center">
-                            {/* <Link to={`/projects/${project._id}`} className="text-blue-500 hover:underline">View Details</Link> */}
+                            <Link 
+                                to={`/tasks/add/${project._id}`} 
+                                className="text-blue-500 hover:underline"
+                            >
+                                Add Task
+                            </Link>
                             <button 
                                 onClick={() => deleteProject(project._id)} 
                                 className="text-red-500 hover:underline"
