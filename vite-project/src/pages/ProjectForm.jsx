@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectForm = () => {
     const [title, setTitle] = useState('');
@@ -7,13 +8,13 @@ const ProjectForm = () => {
     const [priority, setPriority] = useState('Medium');
     const [managers, setManagers] = useState([]);
     const [assignedManager, setAssignedManager] = useState('');
+    const [tasks, setTasks] = useState([{ taskTitle: '', taskDescription: '' }]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchManagers = async () => {
             try {
-                // Fetch the list of managers
                 const managersRes = await axios.get('http://localhost:3000/managers');
-                console.log('Managers Response:', managersRes.data);
                 const managersData = Array.isArray(managersRes.data) ? managersRes.data : [];
                 setManagers(managersData);
             } catch (err) {
@@ -24,21 +25,37 @@ const ProjectForm = () => {
         fetchManagers();
     }, []);
 
+    const handleTaskChange = (index, e) => {
+        const { name, value } = e.target;
+        const newTasks = [...tasks];
+        newTasks[index][name] = value;
+        setTasks(newTasks);
+    };
+
+    const handleAddTask = () => {
+        setTasks([...tasks, { taskTitle: '', taskDescription: '' }]);
+    };
+
+    const handleRemoveTask = (index) => {
+        const newTasks = tasks.filter((_, i) => i !== index);
+        setTasks(newTasks);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
-            const newProjectResponse = await fetch('http://localhost:3000/projects', {
+            const newProjectResponse = await fetch('http://localhost:3000/projects/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
                 body: JSON.stringify({
                     title,
                     content,
                     priority,
-                    managers: [assignedManager] // Include assigned manager in the request
+                    managers: [assignedManager],
+                    tasks
                 })
             });
 
@@ -49,70 +66,133 @@ const ProjectForm = () => {
             }
 
             const newProject = await newProjectResponse.json();
-            console.log('Project added:', newProject);
-
-            // Reset form fields
             setTitle('');
             setContent('');
             setPriority('Medium');
             setAssignedManager('');
+            setTasks([{ taskTitle: '', taskDescription: '' }]);
+            navigate('/projects');
         } catch (err) {
             console.error('Error adding project:', err);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="title">Project Title</label>
-                <input
-                    id="title"
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-            </div>
-            <div>
-                <label htmlFor="content">Content</label>
-                <textarea
-                    id="content"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                />
-            </div>
-            <div>
-                <label htmlFor="priority">Priority</label>
-                <select
-                    id="priority"
-                    value={priority}
-                    onChange={(e) => setPriority(e.target.value)}
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500">
+            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md space-y-6">
+                <h1 className="text-3xl font-semibold text-gray-900 text-center mb-4">Add New Project</h1>
+                
+                <div>
+                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">Project Title</label>
+                    <input
+                        id="title"
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                        required
+                    />
+                </div>
+                
+                <div>
+                    <label htmlFor="content" className="block text-sm font-medium text-gray-700">Content</label>
+                    <textarea
+                        id="content"
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                        rows="4"
+                    />
+                </div>
+                
+                <div>
+                    <label htmlFor="priority" className="block text-sm font-medium text-gray-700">Priority</label>
+                    <select
+                        id="priority"
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value)}
+                        className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                    >
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label htmlFor="assignedManager" className="block text-sm font-medium text-gray-700">Assign Manager</label>
+                    <select
+                        id="assignedManager"
+                        value={assignedManager}
+                        onChange={(e) => setAssignedManager(e.target.value)}
+                        className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                    >
+                        <option value="">Select Manager</option>
+                        {managers.length > 0 ? (
+                            managers.map((manager) => (
+                                <option key={manager._id} value={manager._id}>
+                                    {manager.username}
+                                </option>
+                            ))
+                        ) : (
+                            <option value="">No Managers Available</option>
+                        )}
+                    </select>
+                </div>
+                
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Tasks</label>
+                    {tasks.map((task, index) => (
+                        <div key={index} className="space-y-4">
+                            <div>
+                                <label htmlFor={`taskTitle-${index}`} className="block text-sm font-medium text-gray-700">Task Title</label>
+                                <input
+                                    id={`taskTitle-${index}`}
+                                    name="taskTitle"
+                                    type="text"
+                                    value={task.taskTitle}
+                                    onChange={(e) => handleTaskChange(index, e)}
+                                    className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor={`taskDescription-${index}`} className="block text-sm font-medium text-gray-700">Task Description</label>
+                                <textarea
+                                    id={`taskDescription-${index}`}
+                                    name="taskDescription"
+                                    value={task.taskDescription}
+                                    onChange={(e) => handleTaskChange(index, e)}
+                                    className="border border-gray-300 rounded-lg p-3 w-full text-sm"
+                                    rows="2"
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => handleRemoveTask(index)}
+                                className="text-red-500 hover:text-red-700"
+                            >
+                                Remove Task
+                            </button>
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={handleAddTask}
+                        className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:shadow-lg transition duration-200"
+                    >
+                        Add Task
+                    </button>
+                </div>
+                
+                <button
+                    type="submit"
+                    className="bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg w-full hover:shadow-lg transition duration-200"
                 >
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                </select>
-            </div>
-            <div>
-                <label htmlFor="assignedManager">Assign Manager</label>
-                <select
-                    id="assignedManager"
-                    value={assignedManager}
-                    onChange={(e) => setAssignedManager(e.target.value)}
-                >
-                    <option value="">Select Manager</option>
-                    {managers.length > 0 ? (
-                        managers.map((manager) => (
-                            <option key={manager._id} value={manager._id}>
-                                {manager.username}
-                            </option>
-                        ))
-                    ) : (
-                        <option value="">No Managers Available</option>
-                    )}
-                </select>
-            </div>
-            <button type="submit">Add Project</button>
-        </form>
+                    Add Project
+                </button>
+            </form>
+        </div>
     );
 };
 

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
+    const url = 'http://localhost:3000';
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -16,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         // Check for an existing session by calling the profile route
         const checkUserLoggedIn = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/auth/profile');
+                const response = await axios.get(`${url}/auth/profile`);
                 setUser(response.data);
             } catch (error) {
                 setUser(null);
@@ -30,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password, role) => {
         try {
-            const response = await axios.post('http://localhost:3000/auth/login', { email, password, role });
+            const response = await axios.post(`${url}/auth/login`, { email, password, role });
             const { user } = response.data;
 
             setUser(user);
@@ -43,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (username, email, password, role) => {
         try {
-            const response = await axios.post('http://localhost:3000/auth/signup', { username, email, password, role });
+            const response = await axios.post(`${url}/auth/signup`, { username, email, password, role });
             const { user } = response.data;
 
             setUser(user);
@@ -56,7 +58,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post('http://localhost:3000/auth/logout');
+            await axios.post(`${url}/auth/logout    `);
             setUser(null);
             navigate('/auth/login');
         } catch (error) {
