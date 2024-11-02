@@ -18,9 +18,9 @@ const TaskForm = () => {
             try {
                 // Fetch projects and team members for dropdowns
                 const [projectsRes, teammembersRes, userRes] = await Promise.all([
-                    axios.get('http://localhost:3000/projects'),
-                    axios.get('http://localhost:3000/teammembers'),
-                    axios.get('http://localhost:3000/user/me', { // Fetch current user details
+                    axios.get('https://backend-7coa.onrender.com/projects'),
+                    axios.get('https://backend-7coa.onrender.com/teammembers'),
+                    axios.get('https://backend-7coa.onrender.com/user/me', { // Fetch current user details
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
                         }
@@ -54,7 +54,7 @@ const TaskForm = () => {
                 return;
             }
 
-            const response = await fetch(`http://localhost:3000/tasks/project/${project}`, {
+            const response = await fetch(`https://backend-7coa.onrender.com/tasks/project/${project}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,

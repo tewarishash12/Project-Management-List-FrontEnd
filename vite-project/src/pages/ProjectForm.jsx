@@ -44,7 +44,7 @@ const ProjectForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const newProjectResponse = await fetch('http://localhost:3000/projects/add', {
+            const newProjectResponse = await fetch('https://backend-7coa.onrender.com/projects/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
